@@ -52,9 +52,6 @@ class CSVRunner {
             // Execute commands
             await this.executeCommands();
 
-            // Save results
-            await this.saveResults();
-
             console.log(`\n✅ Execution complete! Results saved to: ${this.resultsFile}`);
 
         } catch (error) {
@@ -123,6 +120,8 @@ class CSVRunner {
             if (!command || command.trim() === '') {
                 console.log(`Row ${i + 1}: Empty command, skipping...`);
                 this.updateResult(row, '', 'empty', '');
+                // Save results after marking empty command
+                await this.saveResults();
                 continue;
             }
 
@@ -144,9 +143,13 @@ class CSVRunner {
                 const result = await this.executeCommand(command);
                 this.updateResult(row, command, 'success', result);
                 console.log(`✅ Success`);
+                // Save results after each successful execution
+                await this.saveResults();
             } catch (error) {
                 this.updateResult(row, command, 'error', error.message);
                 console.log(`❌ Error: ${error.message}`);
+                // Save results after each error
+                await this.saveResults();
             }
         }
     }
