@@ -122,11 +122,16 @@ class CSVRunner {
                 continue;
             }
 
-            // Check if command was already executed successfully
+            // Check if command was already executed successfully (don't retry successful commands)
             const existingResult = this.findExistingResult(row);
             if (existingResult && existingResult.state === 'success') {
                 console.log(`Row ${i + 1}: Command already executed successfully, skipping...`);
                 continue;
+            }
+            
+            // If command was in error state, note that we're retrying
+            if (existingResult && existingResult.state === 'error') {
+                console.log(`Row ${i + 1}: Retrying command that previously failed...`);
             }
 
             console.log(`Row ${i + 1}: Executing: ${command}`);
@@ -194,12 +199,14 @@ class CSVRunner {
             return;
         }
 
-        const headers = [
-            ...Object.keys(this.data[0] || {}),
+        // Ensure all headers are in { id, title } format
+        const originalHeaders = Object.keys(this.data[0] || {}).map(key => ({ id: key, title: key }));
+        const resultHeaders = [
             { id: 'command_executed', title: 'command_executed' },
             { id: 'state', title: 'state' },
             { id: 'output', title: 'output' }
         ];
+        const headers = [...originalHeaders, ...resultHeaders];
 
         const csvWriter = createCsvWriter({
             path: this.resultsFile,
