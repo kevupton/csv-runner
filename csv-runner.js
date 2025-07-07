@@ -5,7 +5,8 @@ const path = require('path');
 const { exec } = require('child_process');
 const csv = require('csv-parser');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const inquirer = require('inquirer').default;
+// Use dynamic import for inquirer since it's an ES module
+let inquirer;
 
 class CSVRunner {
     constructor() {
@@ -18,6 +19,9 @@ class CSVRunner {
 
     async run() {
         try {
+            // Import inquirer dynamically
+            inquirer = (await import('inquirer')).default;
+            
             // Get input file from command line arguments
             this.inputFile = process.argv[2];
             
