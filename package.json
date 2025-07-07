@@ -20,5 +20,9 @@
     "automation"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevupton/csv-runner.git"
+  }
 }
