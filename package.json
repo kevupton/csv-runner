@@ -1,6 +1,6 @@
 {
   "name": "csv-runner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A command-line tool to execute commands from CSV files",
   "main": "csv-runner.js",
   "bin": {
@@ -14,7 +14,11 @@
     "csv-writer": "^1.6.0",
     "inquirer": "^9.2.12"
   },
-  "keywords": ["csv", "command-line", "automation"],
+  "keywords": [
+    "csv",
+    "command-line",
+    "automation"
+  ],
   "author": "",
   "license": "MIT"
-} 
+}
