@@ -1,0 +1,7 @@
+id,script,description
+1,echo "Hello World",Simple echo command
+2,ls -la,List files with details
+3,date,Show current date
+4,invalidcommand,This will fail
+5,whoami,Show current user
+6,,Empty command 
